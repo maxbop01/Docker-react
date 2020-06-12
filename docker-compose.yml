@@ -1,0 +1,22 @@
+version : '3'
+services:
+
+  web:
+    build:  #con . assumo che ho un file docker nella directory se non c e uso context
+      context: .
+      dockerfile: Dockerfile.dev
+    ports: 
+      - "3000:3000"
+    volumes:
+      - /app/node_moduels # escludo la directory
+      - .:/app   # mappo la directory locale con quella del container
+    environment:
+      - CHOKIDAR_USEPOLLING=true # per ricaricare l'app dopo una modifica al file in windows  
+  tests:    
+    build:  #con . assumo che ho un file docker nella directory se non c e uso context
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_moduels # escludo la directory
+      - .:/app   # mappo la directory locale con quella del container
+    command: ["npm", "run", "test"]  
