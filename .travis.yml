@@ -1,0 +1,9 @@
+sudo: required #  devo avere i permessi di superuser per eseguire sto codice
+services: 
+  - docker # si crea una copia di docker nel suo repository
+
+before_install:
+  - docker build -t maxbop01/docker-react -f Dockerfile.dev . # creo l'immagine con un tag
+
+script: #comandi da eseguire
+   - docker run -e CI=true USERNAME/docker-react npm run test
