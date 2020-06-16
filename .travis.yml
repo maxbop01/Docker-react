@@ -7,3 +7,14 @@ before_install:
 
 script: #comandi da eseguire
    - docker run -e CI=true maxbop01/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region:  #la regione in cui è stato creato il servizio AWS elastic
+  app: # nome dell'app creata in AWS
+  env: # nome dell'ambiente aws
+  bucket_name: # nome del file eseguibile in S3 (nel nostro caso = app name)
+  on: 
+    branch: master # dice a travis di deployare automaticamente le modifiche pushate con git su remote master
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY # devo creare un user e due chiavi di accesso alle api su aws con permessi per il servizio e poi riportarle su travis come variabili d'ambiente che poi metto qui
